@@ -26,19 +26,20 @@ function validateInput(testInput) {
 }
 
 function formSubmission(document, faultyItems, pilot, copilot, fuelLevel, cargoLevel) {
+    let launchStatus = document.getElementByID("launchStatus");
 
     if (validateInput(pilot) === "Is a Number" || validateInput(pilot) === "Empty") {
         window.alert("Please enter a string value for pilot.")
     } else {
        let pilotStatus = document.getElementByID("pilotStatus");
-       pilotStatus = `Pilot ${pilot} is ready for launch.`;
+       pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch.`;
     };
 
     if (validateInput(copilot) === "Is a Number" || validateInput(copilot) === "Empty") {
         window.alert("Please enter a string value for pilot.")
     } else {
         let copilotStatus = document.getElementByID("copilotStatus");
-        copilotStatus = `Copilot ${copilot} is ready for launch.`;
+        copilotStatus.innerHTML = `Copilot ${copilot} is ready for launch.`;
     };
 
     if (validateInput(Number(fuelLevel)) === "Not a Number" || validateInput  (Number(fuelLevel)) === "Empty") {
@@ -46,10 +47,12 @@ function formSubmission(document, faultyItems, pilot, copilot, fuelLevel, cargoL
     } else {
     let fuelStatus = document.getElementById("fuelStatus");
        if(fuelLevel < 10000) {
-            faultyItems.visibility = visible;
-            fuelStatus = "Fuel level to low to launch.";
+            faultyItems.style.visibility = visible;
+            fuelStatus.innerHTML = "Fuel level to low to launch.";
+            launchStatus.innerHTML = "Shuttle Not Ready for Launch";
+            launchStatus.style.color = "red";
        } else {
-            fuelStatus = "Fuel level sufficient for launch.";
+            fuelStatus.innerHTML = "Fuel level sufficient for launch.";
        }
     };
 
@@ -58,10 +61,12 @@ function formSubmission(document, faultyItems, pilot, copilot, fuelLevel, cargoL
     } else {
     let cargoStatus = document.getElementById("cargoStatus");
        if(cargoLevel > 10000) {
-            faultyItems.visibility = visible;
-            cargoStatus = "Cargo mass too high to launch.";
+            faultyItems.style.visibility = visible;
+            cargoStatus.innerHTML = "Cargo mass too high to launch.";
+            launchStatus.innerHTML = "Shuttle Not Ready for Launch";
+            launchStatus.style.color = "red";
        } else {
-            cargoStatus = "Cargo mass low enough for launch.";
+            cargoStatus.innerHTML = "Cargo mass low enough for launch.";
        }
    }
 };
