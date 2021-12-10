@@ -1,12 +1,7 @@
-const { formSubmission, pickPlanet } = require("./scriptHelper");
+//const { formSubmission, pickPlanet } = require("./scriptHelper");
 
 window.addEventListener("load", function() {
-   const submitButton = this.document.getElementById("formSubmit");
-   const pilot = this.document.getElementById("pilotName");
-   const copilot = this.document.getElementById("copilotName");
-   const fuelLevel = this.document.getElementById("fuelLevel");
-   const cargoMass = this.document.getElementById("cargoMass");
-   const faultyItems = this.document.getElementById("faultyItems"); 
+    const form = this.document.querySelector("form");
 
    let listedPlanets;
    // Set listedPlanetsResponse equal to the value returned by calling myFetch()
@@ -20,8 +15,22 @@ window.addEventListener("load", function() {
        pickPlanet(listedPlanets);
    });
 
-   submitButton.addEventListener("click", event => {
-       formSubmission(this.document, faultyItems, pilot, copilot, fuelLevel, cargoMass);
+   form.addEventListener("submit", event => {
+        event.preventDefault();
+        
+        const pilot = this.document.getElementById("pilotName").value;
+        const copilot = this.document.getElementById("copilotName").value;
+        const fuelLevel = this.document.getElementById("fuelLevel").value;
+        const cargoMass = this.document.getElementById("cargoMass").value;
+        const faultyItems = this.document.getElementById("faultyItems");
+
+        // console.log(pilot);
+        // console.log(copilot);
+        // console.log(fuelLevel);
+        // console.log(cargoMass);
+        
+         formSubmission(this.document, faultyItems, pilot, copilot, fuelLevel, cargoMass);
+         
     });
    
 });
