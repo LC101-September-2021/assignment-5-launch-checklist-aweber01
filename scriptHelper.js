@@ -1,9 +1,10 @@
 require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
+    console.log(name);
    // Here is the HTML formatting for our mission target div.
-   /*let missionTarget = document.getElementByID("missionTarget");
-   missionTarget.innerHTML = "
+   let missionTarget = document.getElementById("missionTarget");
+   missionTarget.innerHTML = `
                 <h2>Mission Destination</h2>
                 <ol>
                     <li>Name: ${name}</li>
@@ -12,8 +13,8 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
                     <li>Distance from Earth: ${distance}</li>
                     <li>Number of Moons: ${moons}</li>
                 </ol>
-                <img src=${image}>"
-   */
+                <img src=${imageUrl}>`
+   
 };
 
 function validateInput(testInput) {
@@ -40,7 +41,7 @@ function formSubmission(document, faultyItems, pilot, copilot, fuelLevel, cargoM
        let pilotStatus = document.getElementById("pilotStatus");
        pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch.`;
        pilotGood = true;
-       console.log(`Pilot ${pilot} is ready for launch.`);
+       //console.log(`Pilot ${pilot} is ready for launch.`);
        
     };
 
@@ -50,7 +51,7 @@ function formSubmission(document, faultyItems, pilot, copilot, fuelLevel, cargoM
         let copilotStatus = document.getElementById("copilotStatus");
         copilotStatus.innerHTML = `Copilot ${copilot} is ready for launch.`;
         copilotGood = true;
-        console.log(`Copilot ${copilot} is ready for launch.`);
+        //console.log(`Copilot ${copilot} is ready for launch.`);
     };
 
     if (validateInput(fuelLevel) === "Not a Number") {
@@ -86,6 +87,7 @@ function formSubmission(document, faultyItems, pilot, copilot, fuelLevel, cargoM
    if(pilotGood && copilotGood && fuelGood && cargoGood) {
         launchStatus.innerHTML = "Shuttle Ready for Launch";
         launchStatus.style.color = "green";
+        faultyItems.style.visibility = "hidden";
    }
 };
 
@@ -93,13 +95,16 @@ async function myFetch() {
     let planetsReturned;
 
     planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
-        response.json();
+        return response.json();
     });
+    //console.log(planetsReturned);
     return planetsReturned;
 };
 
 function pickPlanet(planets) {
-
+    let i = Math.floor(Math.random() * 6);
+    console.log(i);
+    return planets[i];
 };
 
 module.exports.addDestinationInfo = addDestinationInfo;
